@@ -1,0 +1,68 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="libraries/habitat.css" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Draw dead fish</title>
+</head>
+<style>
+  main {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .level {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    /* border: 2px solid black; */
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    /* color: black; */
+    font-size: 20px;
+    flex-shrink: 0;
+    color: black;
+    outline: 0px solid black;
+    outline-offset: 4px;
+    transition: outline-offset 1s, outline-width 0.3s;
+  }
+
+  .level:hover {
+    background-color: black;
+    color: white;
+  }
+
+  .level.completed {
+    border-width: 2px;
+    outline: 2px solid black;
+    outline-offset: 0px;
+    /* outline: 2px solid black;
+    outline-offset: -6px; */
+  }
+
+  .level.completed:hover {
+    background-color: black;
+    /* outline: 2px solid white;
+    outline-offset: -4px; */
+  }
+</style>
+
+<main>
+  <a class="level" href="1/">1</a>
+</main>
+
+<script type="module">
+  import { LEVEL_PROGRESS_LOCAL_STORAGE_KEY } from "./script/save.js";
+  const progress = JSON.parse(
+    localStorage.getItem(LEVEL_PROGRESS_LOCAL_STORAGE_KEY) ?? "[]"
+  );
+  let i = 0;
+  for (const levelName of progress) {
+    i++;
+    const levelButton = document.querySelector(`a[href="${levelName}/"]`);
+    setTimeout(() => levelButton.classList.add("completed"), 100 * i);
+    // levelButton.textContent = "✓";
+  }
+</script>

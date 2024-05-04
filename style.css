@@ -1,0 +1,18 @@
+* {
+  box-sizing: border-box;
+  /* margin: 0; */
+}
+
+body {
+  font-family: sans-serif;
+}
+
+@font-face {
+  font-family: "Ducahier";
+  src: url("fonts/Ducahier.ttf");
+}
+
+@font-face {
+  font-family: "Hand";
+  src: url("fonts/Hand.ttf");
+}

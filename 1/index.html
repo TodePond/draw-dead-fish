@@ -1,0 +1,143 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../libraries/habitat.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <title>Draw dead fish</title>
+
+  <style>
+    * {
+      margin: 0;
+    }
+
+    canvas {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      touch-action: none;
+      overscroll-behavior: none;
+    }
+
+    footer,
+    article {
+      display: flex;
+      z-index: 1;
+      position: fixed;
+      height: 40%;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      bottom: 0px;
+      padding: 0px;
+    }
+
+    main {
+      display: flex;
+      z-index: 1;
+      position: relative;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    button {
+      cursor: pointer;
+      background-color: white;
+      border: 2px solid black;
+      font-size: 20px;
+      width: 100px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      text-decoration: none;
+      color: black;
+    }
+
+    a.button {
+      cursor: pointer;
+      background-color: white;
+      border: 2px solid black;
+      font-size: 20px;
+      width: 100px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      text-decoration: none;
+      color: black;
+    }
+
+    button:hover,
+    a.button:hover {
+      background-color: black;
+      color: white;
+    }
+
+    p {
+      font-size: 30px;
+    }
+
+    footer,
+    article {
+      pointer-events: none;
+    }
+
+    footer > *,
+    article > * {
+      pointer-events: auto;
+    }
+
+    article > p {
+      font-family: "Hand";
+      font-size: 60px;
+      text-align: center;
+      user-select: none;
+      /* smaller spacing between words */
+      /* letter-spacing: -0.01em; */
+    }
+
+    @media screen and (max-width: 600px) {
+      article > p {
+        font-size: 40px;
+      }
+    }
+
+    .fade-out {
+      animation: fade-out 10s forwards;
+      animation-timing-function: ease-in-out;
+    }
+
+    @keyframes fade-out {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<canvas></canvas>
+<main>
+  <p>Draw a fish</p>
+  <button id="start">Start</button>
+  <a class="button" href="/">Back</a>
+</main>
+
+<article style="display: none">
+  <p>This is not a fish</p>
+</article>
+
+<footer style="display: none">
+  <button id="submit">Submit</button>
+</footer>
+
+<script type="module" src="script.js"></script>
