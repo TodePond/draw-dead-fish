@@ -44,6 +44,8 @@ document
 
 const pointer = usePointer(context.canvas);
 
+const oneDraw = new Signal(false);
+
 /** @type {[number, number] | null} */
 let previousPosition = null;
 use(() => {
@@ -51,6 +53,9 @@ use(() => {
   if (!pointer.down.get()) {
     previousPosition = null;
     return;
+  }
+  if (!oneDraw.get()) {
+    oneDraw.set(true);
   }
   const [x, y] = pointer.position.get();
   if (!previousPosition) {
@@ -83,16 +88,19 @@ const footer = document.querySelector("footer");
 const article = document.querySelector("article");
 const submitButton = document.querySelector("#submit");
 use(() => {
-  footer?.style.setProperty(
-    "display",
-    phase.get() === "game" ? "flex" : "none"
-  );
-
   article?.style.setProperty(
     "display",
     phase.get() === "finish" ? "flex" : "none"
   );
 }, [phase]);
+
+use(() => {
+  if (!oneDraw.get()) return;
+  footer?.style.setProperty(
+    "display",
+    phase.get() === "game" ? "flex" : "none"
+  );
+}, [phase, oneDraw]);
 
 const audio = new Audio("/audio/lifeless.m4a");
 submitButton?.addEventListener("click", (event) => {
