@@ -60,6 +60,8 @@
 <p id="teaser">More levels coming soon...</p>
 
 <script type="module">
+  import { registerDotDee } from "./libraries/habitat.js";
+  registerDotDee();
   import { LEVEL_PROGRESS_LOCAL_STORAGE_KEY } from "./script/save.js";
   const progress = JSON.parse(
     localStorage.getItem(LEVEL_PROGRESS_LOCAL_STORAGE_KEY) ?? "[]"
@@ -72,9 +74,17 @@
     // levelButton.textContent = "✓";
   }
 
-  if (progress.length === 1) {
-    setTimeout(() => {
+  setTimeout(() => {
+    const links = document.querySelectorAll("a.level");
+    let allLinksCompleted = true;
+    links.forEach((link) => {
+      if (!link.classList.contains("completed")) {
+        allLinksCompleted = false;
+      }
+    });
+
+    if (allLinksCompleted) {
       document.getElementById("teaser").style.opacity = 1;
-    }, 100 * i + 100);
-  }
+    }
+  }, 100 * i + 100);
 </script>
