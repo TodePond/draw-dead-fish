@@ -12,6 +12,14 @@ body {
   src: url("fonts/Ducahier.ttf");
 }
 
+button {
+  user-select: none;
+}
+
+a.button {
+  user-select: none;
+}
+
 @font-face {
   font-family: "Hand";
   src: url("fonts/Hand.ttf");
