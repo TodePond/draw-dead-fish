@@ -47,11 +47,17 @@
     /* outline: 2px solid white;
     outline-offset: -4px; */
   }
+
+  #teaser {
+    opacity: 0;
+    transition: opacity 3s;
+  }
 </style>
 
 <main>
   <a class="level button" href="1/">1</a>
 </main>
+<p id="teaser">More levels coming soon...</p>
 
 <script type="module">
   import { LEVEL_PROGRESS_LOCAL_STORAGE_KEY } from "./script/save.js";
@@ -64,5 +70,11 @@
     const levelButton = document.querySelector(`a[href="${levelName}/"]`);
     setTimeout(() => levelButton.classList.add("completed"), 100 * i);
     // levelButton.textContent = "✓";
+  }
+
+  if (progress.length === 1) {
+    setTimeout(() => {
+      document.getElementById("teaser").style.opacity = 1;
+    }, 100 * i + 100);
   }
 </script>
