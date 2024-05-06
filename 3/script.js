@@ -139,5 +139,5 @@ submitButton?.addEventListener("click", (event) => {
 
   setTimeout(() => {
     location.href = "/";
-  }, 5000);
+  }, 7000);
 });
