@@ -1,4 +1,4 @@
-import { Signal } from "../libraries/habitat.js";
+import { Signal } from "./habitat.js";
 
 /**
  * @type {{
@@ -8,7 +8,13 @@ import { Signal } from "../libraries/habitat.js";
  **/
 let cached = null;
 
-export function usePointer(element = document.body) {
+/**
+ * @param {{
+ *  element: HTMLElement;
+ *  capture?: boolean;
+ * }} options
+ */
+export function usePointer({ element = document.body, capture = true }) {
   if (cached) {
     return cached;
   }
@@ -29,10 +35,16 @@ export function usePointer(element = document.body) {
 
   element.addEventListener("pointermove", updatePosition);
   element.addEventListener("pointerdown", (event) => {
+    if (capture) {
+      element.setPointerCapture(event.pointerId);
+    }
     updatePosition(event);
     pointer.down.set(true);
   });
   element.addEventListener("pointerup", (event) => {
+    if (capture) {
+      element.releasePointerCapture(event.pointerId);
+    }
     updatePosition(event);
     pointer.down.set(false);
   });

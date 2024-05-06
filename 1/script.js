@@ -1,7 +1,7 @@
 import { Signal, equals, registerDotDee, use } from "../libraries/habitat.js";
+import { usePointer } from "../libraries/usePointer.js";
 import { LEVEL_PROGRESS_LOCAL_STORAGE_KEY } from "../script/save.js";
 import { useContext } from "./useContext.js";
-import { usePointer } from "./usePointer.js";
 
 registerDotDee();
 
@@ -42,7 +42,7 @@ document
   .querySelector("#start")
   ?.addEventListener("click", () => phase.set("game"));
 
-const pointer = usePointer(context.canvas);
+const pointer = usePointer({ element: context.canvas });
 
 const oneDraw = new Signal(false);
 

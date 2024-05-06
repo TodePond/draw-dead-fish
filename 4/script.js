@@ -1,7 +1,7 @@
 import { Signal, equals, registerDotDee, use } from "../libraries/habitat.js";
-import { usePointer } from "../libraries/usePointer.js";
 import { LEVEL_PROGRESS_LOCAL_STORAGE_KEY } from "../script/save.js";
 import { useContext } from "./useContext.js";
+import { usePointer } from "../libraries/usePointer.js";
 
 registerDotDee();
 
@@ -45,7 +45,21 @@ document
 const pointer = usePointer({ element: context.canvas });
 
 const oneDraw = new Signal(false);
-const faded = new Signal(false);
+
+context.fillStyle = "black";
+context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+
+function lighten() {
+  context.globalAlpha = 0.005;
+  context.fillStyle = "rgba(255, 255, 255)";
+  context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+  context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+  context.globalAlpha = 1;
+  requestAnimationFrame(lighten);
+}
+
+lighten();
+
 /** @type {[number, number] | null} */
 let previousPosition = null;
 use(() => {
@@ -56,10 +70,6 @@ use(() => {
   }
   if (!oneDraw.get()) {
     oneDraw.set(true);
-    document.body.classList.add("fade-to-black");
-    setTimeout(() => {
-      faded.set(true);
-    }, 2000);
   }
   const [x, y] = pointer.position.get();
   if (!previousPosition) {
@@ -100,14 +110,13 @@ use(() => {
 
 use(() => {
   if (!oneDraw.get()) return;
-  if (!faded.get()) return;
   footer?.style.setProperty(
     "display",
     phase.get() === "game" ? "flex" : "none"
   );
-}, [phase, oneDraw, faded]);
+}, [phase, oneDraw]);
 
-const audio = new Audio("/audio/see-the-art.mp3");
+const audio = new Audio("/audio/all-right-there.mp3");
 submitButton?.addEventListener("click", (event) => {
   phase.set("finish");
   event.stopPropagation();
@@ -116,8 +125,8 @@ submitButton?.addEventListener("click", (event) => {
     localStorage.getItem(LEVEL_PROGRESS_LOCAL_STORAGE_KEY) ?? "[]"
   );
 
-  if (!progress.includes(3)) {
-    progress.push(3);
+  if (!progress.includes(4)) {
+    progress.push(4);
   }
 
   progress.sort((a, b) => a - b);
@@ -127,17 +136,10 @@ submitButton?.addEventListener("click", (event) => {
     JSON.stringify(progress)
   );
 
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-  document.body.classList.add("fade-to-white");
-  article?.classList.add("fade-out");
-  // setTimeout(() => {
-  //   // document.body.classList.remove("fade-to-white");
-  //   document.body.classList.add("fade-out");
-  // }, 5000);
-
+  document.body.classList.add("fade-out");
   audio.play();
 
   setTimeout(() => {
     location.href = "/";
-  }, 7000);
+  }, 10000);
 });

@@ -1,0 +1,162 @@
+<head>
+  <script
+    data-goatcounter="https://todepond.goatcounter.com/count"
+    async
+    src="//gc.zgo.at/count.js"
+  ></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../libraries/habitat.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="720" />
+  <meta property="og:image" content="https://drawdeadfish.com/images/og.png" />
+  <meta property="og:title" content="Draw dead fish" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Draw dead fish" />
+  <meta name="twitter:description" content="" />
+  <meta name="twitter:image" content="https://drawdeadfish.com/images/og.png" />
+  <title>Draw dead fish</title>
+
+  <style>
+    * {
+      margin: 0;
+    }
+
+    canvas {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      touch-action: none;
+      overscroll-behavior: none;
+    }
+
+    footer,
+    article {
+      display: flex;
+      z-index: 1;
+      position: fixed;
+      height: 40%;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      bottom: 0px;
+      padding: 0px;
+    }
+
+    main {
+      display: flex;
+      z-index: 1;
+      position: relative;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    button {
+      cursor: pointer;
+      background-color: white;
+      border: 2px solid black;
+      font-size: 20px;
+      width: 100px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      text-decoration: none;
+      color: black;
+    }
+
+    a.button {
+      cursor: pointer;
+      background-color: white;
+      border: 2px solid black;
+      font-size: 20px;
+      width: 100px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      text-decoration: none;
+      color: black;
+    }
+
+    button:hover,
+    a.button:hover {
+      background-color: black;
+      color: white;
+    }
+
+    p {
+      font-family: "Hand";
+      font-size: 50px;
+    }
+
+    footer,
+    article {
+      pointer-events: none;
+    }
+
+    footer > *,
+    article > * {
+      pointer-events: auto;
+    }
+
+    article > p {
+      font-family: "Hand";
+      font-size: 60px;
+      text-align: center;
+      user-select: none;
+      /* smaller spacing between words */
+      /* letter-spacing: -0.01em; */
+    }
+
+    @media screen and (max-width: 600px) {
+      article > p {
+        font-size: 40px;
+      }
+    }
+
+    .fade-out {
+      animation: fade-out 10s forwards;
+      animation-timing-function: ease-in-out;
+    }
+
+    @keyframes fade-out {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    canvas {
+      filter: brightness(2);
+    }
+  </style>
+</head>
+
+<canvas></canvas>
+<main>
+  <p>Draw a fish</p>
+  <button id="start">Start</button>
+  <!-- <a class="button" href="/">Back</a> -->
+</main>
+
+<article style="display: none">
+  <p>This is not a fish</p>
+</article>
+
+<footer style="display: none">
+  <button id="submit">Submit</button>
+</footer>
+
+<script type="module" src="script.js"></script>
