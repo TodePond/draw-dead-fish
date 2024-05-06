@@ -353,11 +353,16 @@ export class Observer {
 
 /**
  * @template T
- * @param {(previous: T) => T} callback
+ * @param {(previous: T) => T | T} value
  * @param {(Signal | Observer)[]} dependencies
  */
-export function use(callback, dependencies) {
-  return new Observer(callback, dependencies);
+export function use(value, dependencies) {
+  if (typeof value === "function") {
+    const callback = value;
+    return new Observer(callback, dependencies);
+  }
+
+  return new Signal(value);
 }
 
 //=======//
