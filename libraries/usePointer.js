@@ -1,3 +1,4 @@
+import { getSaneDevicePixelRatio } from "./devicePixelRatio.js";
 import { Signal } from "./habitat.js";
 
 /**
@@ -28,8 +29,8 @@ export function usePointer({ element = document.body, capture = true }) {
   /** @param {PointerEvent} event */
   function updatePosition(event) {
     pointer.position.set([
-      event.clientX * devicePixelRatio,
-      event.clientY * devicePixelRatio,
+      event.clientX * devicePixelRatio, //* getSaneDevicePixelRatio(),
+      event.clientY * devicePixelRatio, //* getSaneDevicePixelRatio(),
     ]);
   }
 

@@ -1,3 +1,4 @@
+import { getSaneDevicePixelRatio } from "../libraries/devicePixelRatio.js";
 import { Signal, equals, registerDotDee, use } from "../libraries/habitat.js";
 import { usePointer } from "../libraries/usePointer.js";
 import { LEVEL_PROGRESS_LOCAL_STORAGE_KEY } from "../script/save.js";
@@ -7,28 +8,39 @@ registerDotDee();
 
 const context = useContext();
 
-/** @type {Signal<[number, number]>} */
-const windowDimensions = new Signal([innerWidth, innerHeight]);
-
-addEventListener("resize", () =>
-  windowDimensions.set([innerWidth, innerHeight])
-);
+// /** @type {Signal<[number, number]>} */
+// const windowDimensions = new Signal([innerWidth, innerHeight]);
 
 const extraCanvas = document.createElement("canvas");
 const extraContext = extraCanvas.getContext("2d");
-use(() => {
-  const [width, height] = windowDimensions.get();
-  const { canvas } = context;
+
+////
+
+function handleResize() {
   if (!extraContext) {
     throw new Error("Could not get 2d context from canvas");
   }
-  extraCanvas.width = canvas.width;
-  extraCanvas.height = canvas.height;
-  extraContext.drawImage(canvas, 0, 0);
-  canvas.width = width * devicePixelRatio;
-  canvas.height = height * devicePixelRatio;
-  context.drawImage(extraCanvas, 0, 0, canvas.width, canvas.height);
-}, [windowDimensions]);
+  extraContext.drawImage(context.canvas, 0, 0);
+
+  context.canvas.width = window.innerWidth * devicePixelRatio;
+  context.canvas.height = window.innerHeight * devicePixelRatio;
+
+  // context.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+  context.drawImage(
+    extraContext.canvas,
+    0,
+    0,
+    context.canvas.width,
+    context.canvas.height
+  );
+
+  extraContext.canvas.width = window.innerWidth * devicePixelRatio;
+  extraContext.canvas.height = window.innerHeight * devicePixelRatio;
+}
+
+addEventListener("resize", handleResize);
+handleResize();
+///
 
 /** @type {Signal<"menu" | "game" | "finish">} */
 const phase = new Signal("menu");
@@ -65,6 +77,7 @@ use(() => {
   }
 
   if (equals([x, y], previousPosition)) return;
+  console.log("draw");
   paintLine(previousPosition, [x, y]);
   previousPosition = [x, y];
 }, [phase, pointer.down, pointer.position]);
@@ -75,7 +88,7 @@ use(() => {
  */
 function paintLine(start, end = start) {
   context.strokeStyle = "black";
-  context.lineWidth = 20 * devicePixelRatio;
+  context.lineWidth = 20 * getSaneDevicePixelRatio();
   context.lineCap = "round";
   context.beginPath();
   context.moveTo(...start);

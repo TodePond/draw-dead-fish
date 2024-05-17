@@ -2,6 +2,7 @@ import { Signal, equals, registerDotDee, use } from "../libraries/habitat.js";
 import { LEVEL_PROGRESS_LOCAL_STORAGE_KEY } from "../script/save.js";
 import { useContext } from "./useContext.js";
 import { usePointer } from "../libraries/usePointer.js";
+import { getSaneDevicePixelRatio } from "../libraries/devicePixelRatio.js";
 
 registerDotDee();
 
@@ -25,8 +26,8 @@ use(() => {
   extraCanvas.width = canvas.width;
   extraCanvas.height = canvas.height;
   extraContext.drawImage(canvas, 0, 0);
-  canvas.width = width * devicePixelRatio;
-  canvas.height = height * devicePixelRatio;
+  canvas.width = width * getSaneDevicePixelRatio();
+  canvas.height = height * getSaneDevicePixelRatio();
   context.drawImage(extraCanvas, 0, 0, canvas.width, canvas.height);
 }, [windowDimensions]);
 
@@ -89,7 +90,7 @@ use(() => {
  */
 function paintLine(start, end = start) {
   context.strokeStyle = "black";
-  context.lineWidth = 20 * devicePixelRatio;
+  context.lineWidth = 20 * getSaneDevicePixelRatio();
   context.lineCap = "round";
   context.beginPath();
   context.moveTo(...start);

@@ -25,8 +25,8 @@ addEventListener("resize", () =>
 //   extraCanvas.width = canvas.width;
 //   extraCanvas.height = canvas.height;
 //   extraContext.drawImage(canvas, 0, 0);
-//   canvas.width = width * devicePixelRatio;
-//   canvas.height = height * devicePixelRatio;
+//   canvas.width = width * getSaneDevicePixelRatio();
+//   canvas.height = height * getSaneDevicePixelRatio();
 //   context.drawImage(extraCanvas, 0, 0, canvas.width, canvas.height);
 // }, [windowDimensions]);
 
@@ -75,7 +75,7 @@ const oneDraw = new Signal(false);
  */
 // function paintLine(start, end = start) {
 //   context.strokeStyle = "black";
-//   context.lineWidth = 20 * devicePixelRatio;
+//   context.lineWidth = 20 * getSaneDevicePixelRatio();
 //   context.lineCap = "round";
 //   context.beginPath();
 //   context.moveTo(...start);
